@@ -4,7 +4,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-module.export = {
+module.exports = {
   devServer: {
     overlay: {
       warnings: true,
@@ -14,6 +14,8 @@ module.export = {
     // host: '0.0.0.0',
     open: true
   },
+
+  // 修改webpack的配置
   chainWebpack (config) {
     config.resolve.alias
       .set('components', resolve('src/components'))

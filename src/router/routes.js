@@ -5,18 +5,18 @@ export default [
   },
   {
     path: '/tour',
-    component: () => import('../components/tour/tour')
+    component: () => import('components/tour/tour')
   },
   {
     path: '/hotels',
-    component: () => import('../components/hotels/hotels')
+    component: () => import('components/hotels/hotels')
   },
   {
     path: '/trains',
-    component: () => import('../components/trains/trains')
+    component: () => import('components/trains/trains')
   },
   {
     path: '/vehicles',
-    component: () => import('../components/vehicles/vehicles')
+    component: () => import('components/vehicles/vehicles')
   }
 ]
