@@ -1,9 +1,11 @@
 <template>
   <div class="header">
-    <a href="https://www.tripadvisor.cn/" class="web-logo">
+    <a href="javascript:void(0);" class="web-logo">
       <img src="https://cc.ddcdn.com/img2/langs/zh_CN/branding/rebrand/TA_logo_primary.svg" alt="猫途鹰">
     </a>
-    <div class="header-img-container"></div>
+    <div class="header-img-container">
+      <img src="https://ccm.ddcdn.com/cms/site/branding/videos/tahiti/poster.png" alt="logo">
+    </div>
   </div>
 </template>
 
@@ -36,8 +38,13 @@ export default {
         height 50px
     .header-img-container
       position relative
-      width 100%
-      height 500px
       overflow hidden
-      background url('https://ccm.ddcdn.com/cms/site/branding/videos/tahiti/poster.png') no-repeat center
+      img
+        width 100%
+
+  @media (max-width: 768px)
+    .header
+      .web-logo
+        max-width 768px
+        text-align center
 </style>

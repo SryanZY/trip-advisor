@@ -6,11 +6,11 @@
         <router-link to="/tour" class="tab-item">Tours</router-link>
         <router-link to="/hotels" class="tab-item">Hotels</router-link>
         <router-link to="/trains" class="tab-item">Trains</router-link>
-        <router-link to="/vehicles" class="tab-item">Vehicles-Booking</router-link>
+        <router-link to="/vehicles" class="tab-item">Vehicles</router-link>
       </div>
-      <keep-alive>
+      <!-- <keep-alive>
         <router-view />
-      </keep-alive>
+      </keep-alive> -->
     </div>
   </div>
 </template>
@@ -30,8 +30,7 @@ export default {
     height 100%
     .tour-wrapper
       max-width 1170px
-      margin 0 auto
-      height 200px
+      margin 0 auto 50px
       .tab
         margin-top 50px
         margin-bottom 30px
@@ -76,4 +75,15 @@ export default {
             background #e3e3e3
           &:first-child
             border-left none
+
+    @media (max-width: 768px)
+      .tour-wrapper
+        max-width 768px
+        margin 0 0 40px
+        .tab
+          margin 20px 0 10px 0
+          .tab-item
+            &.active-link
+              &:after
+                border none
 </style>
