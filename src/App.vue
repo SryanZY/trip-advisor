@@ -8,9 +8,9 @@
         <router-link to="/trains" class="tab-item">Trains</router-link>
         <router-link to="/vehicles" class="tab-item">Vehicles</router-link>
       </div>
-      <!-- <keep-alive>
+      <keep-alive>
         <router-view />
-      </keep-alive> -->
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -28,6 +28,7 @@ export default {
   #app
     width 100%
     height 100%
+    overflow-x hidden
     .tour-wrapper
       max-width 1170px
       margin 0 auto 50px
