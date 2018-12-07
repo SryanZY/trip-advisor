@@ -6,12 +6,17 @@ function resolve (dir) {
 
 module.exports = {
   devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8900'
+      }
+    },
     overlay: {
       warnings: true,
       errors: true
     },
     port: 8083,
-    // host: '0.0.0.0',
+    host: '0.0.0.0',
     open: true
   },
 

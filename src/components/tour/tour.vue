@@ -14,14 +14,18 @@
         </div>
       </div>
     </div>
-    <Contact>
+    <Contact @sendMess="sendMess">
       <p class="slogan">Let us know which place  you wanna visit in China ,we will help you plan a perfect trip. <em>Email us</em></p>
     </Contact>
+    <mask-wrapper :content="content" :tan="tan" ref="maskWrapper"></mask-wrapper>
   </div>
 </template>
 
 <script>
 import Contact from 'components/contact/contact'
+import MaskWrapper from 'components/masks/masks'
+import axios from 'axios'
+
 export default {
   name: 'tour',
   data () {
@@ -84,11 +88,51 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      content: '',
+      tan: ''
+    }
+  },
+  methods: {
+    sendMess (name, email, content) {
+      let formData = {
+        name: name,
+        email: email,
+        content: content
+      }
+      /* eslint-disable */
+      let ePattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+      /* eslint-disable */
+      if (!formData.name) {
+        this.tan = '!'
+        this.content = 'Please enter your name'
+      }
+      if (!ePattern.test(formData.email) || !formData.email) {
+        this.tan = '!'
+        this.content = 'Please enter the correct format email address'
+      }
+      if (!formData.content) {
+        this.tan = '!'
+        this.content = 'Please enter your content'
+      }
+      axios({
+        method: 'post',
+        url: '/api/email',
+        data: formData
+      }).then(res => {
+        if (res.data.errno === 0) {
+          this.tan = ''
+          this.content = 'Mail sent successfully!'
+        } else {
+          this.content = 'Mail send failed'
+        }
+      }).catch(error => console.log(error))
+      this.$refs.maskWrapper.isShow = true
     }
   },
   components: {
-    Contact
+    Contact,
+    MaskWrapper
   }
 
 }
@@ -160,7 +204,7 @@ export default {
           color $color-col-line
           text-indent 30px
   .slogan
-    margin-bottom 20px
+    margin-bottom 40px
     padding-left 20px
     font-size 22px
     line-height 24px

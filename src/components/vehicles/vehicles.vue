@@ -10,17 +10,29 @@
         </div>
       </div>
     </div>
-    <Contact><p class="slogan">Let us know if you wanna book.<em>Email us</em></p></Contact>
+    <Contact @sendMess="sendMess"><p class="slogan">Let us know if you wanna book.<em>Email us</em></p></Contact>
   </div>
 </template>
 
 <script>
 import Contact from 'components/contact/contact'
+import axios from 'axios'
+
 export default {
   name: 'vehicles-booking',
   data () {
     return {
       imgSrc: require('./vehicle.jpeg')
+    }
+  },
+  methods: {
+    sendMess (name, email, content) {
+      let formData = {
+        name: name,
+        email: email,
+        content: content
+      }
+      axios.post('/api/email', formData)
     }
   },
   components: {
@@ -64,7 +76,7 @@ export default {
         .first-line
           margin-bottom 15px
   .slogan
-    margin-bottom 20px
+    margin-bottom 40px
     padding-left 20px
     font-size 22px
     line-height 24px

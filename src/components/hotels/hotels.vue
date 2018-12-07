@@ -11,21 +11,66 @@
         </div>
       </div>
     </div>
-    <Contact><p class="slogan">Let us know if you wanna our help.<em>Email us</em></p></Contact>
+    <Contact @sendMess="sendMess"><p class="slogan">Let us know if you wanna our help.<em>Email us</em></p></Contact>
+    <mask-wrapper :content="content" :tan="tan" ref="maskWrapper" ></mask-wrapper>
   </div>
 </template>
 
 <script>
 import Contact from 'components/contact/contact'
+import MaskWrapper from 'components/masks/masks'
+import axios from 'axios'
+
 export default {
   name: 'hotels',
   data () {
     return {
-      imgSrc: require('./hotel.jpg')
+      imgSrc: require('./hotel.jpg'),
+      content: '',
+      tan: ''
     }
   },
+  methods: {
+    sendMess (name, email, content) {
+      let formData = {
+        name: name,
+        email: email,
+        content: content
+      }
+      /* eslint-disable */
+      let ePattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+      /* eslint-disable */
+      if (!formData.name) {
+        this.tan = '!'
+        this.content = 'Please enter your name'
+      }
+      if (!ePattern.test(formData.email) || !formData.email) {
+        this.tan = '!'
+        this.content = 'Please enter the correct format email address'
+      }
+      if (!formData.content) {
+        this.tan = '!'
+        this.content = 'Please enter your content'
+      }
+      axios({
+        method: 'post',
+        url: '/api/email',
+        data: formData
+      }).then(res => {
+        if (res.data.errno === 0 && formData.name && formData.email && formData.content) {
+          this.tan = ''
+          this.content = 'Mail sent successfully!'
+        } else if (res.data.errno === 1 && formData.name && formData.email && formData.content) {
+          this.tan = ''
+          this.content = 'Mail sent failed'
+        }
+      }).catch(error => console.log(error))
+      this.$refs.maskWrapper.isShow = true
+    },
+  },
   components: {
-    Contact
+    Contact,
+    MaskWrapper
   }
 
 }
@@ -63,7 +108,7 @@ export default {
         .first-line
           margin-bottom 15px
   .slogan
-    margin-bottom 20px
+    margin-bottom 40px
     padding-left 20px
     font-size 22px
     line-height 24px
