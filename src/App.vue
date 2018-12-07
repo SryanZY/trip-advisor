@@ -28,7 +28,6 @@ export default {
   #app
     width 100%
     height 100%
-    overflow-x hidden
     .tour-wrapper
       max-width 1170px
       margin 0 auto 50px
@@ -36,7 +35,6 @@ export default {
         margin-top 50px
         margin-bottom 30px
         display flex
-        width 100%
         height 45px
         border 1px solid #e3e2df
         border-bottom-color #e3e2df
