@@ -11,16 +11,20 @@
       <keep-alive>
         <router-view />
       </keep-alive>
+      <hrefs></hrefs>
     </div>
   </div>
 </template>
 
 <script>
 import TripHeader from 'components/header/header'
+import Hrefs from 'components/hrefs/hrefs'
+
 export default {
   name: 'app',
   components: {
-    TripHeader
+    TripHeader,
+    Hrefs
   }
 }
 </script>
