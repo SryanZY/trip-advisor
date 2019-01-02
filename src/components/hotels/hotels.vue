@@ -34,7 +34,7 @@ export default {
     sendMess (name, email, content) {
       let formData = {
         name: name,
-        email: email,
+        visitor_email: email,
         content: content
       }
       /* eslint-disable */
@@ -44,7 +44,7 @@ export default {
         this.tan = '!'
         this.content = 'Please enter your name'
       }
-      if (!ePattern.test(formData.email) || !formData.email) {
+      if (!ePattern.test(formData.visitor_email) || !formData.visitor_email) {
         this.tan = '!'
         this.content = 'Please enter the correct format email address'
       }
@@ -54,19 +54,20 @@ export default {
       }
       axios({
         method: 'post',
-        url: '/api/email',
+        url: 'http://47.105.180.76/mail/send',
         data: formData
       }).then(res => {
-        if (res.data.errno === 0 && formData.name && formData.email && formData.content) {
+        console.log(res)
+        if (res.status && formData.name && formData.visitor_email && formData.content) {
           this.tan = ''
           this.content = 'Mail sent successfully!'
-        } else if (res.data.errno === 1 && formData.name && formData.email && formData.content) {
+        } else if (!res.status && formData.name && formData.visitor_email && formData.content) {
           this.tan = ''
           this.content = 'Mail sent failed'
         }
       }).catch(error => console.log(error))
       this.$refs.maskWrapper.isShow = true
-    },
+    }
   },
   components: {
     Contact,

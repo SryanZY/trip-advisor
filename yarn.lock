@@ -1422,7 +1422,7 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   resolved "http://registry.npm.taobao.org/bn.js/download/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
   integrity sha1-LN4J617jQfSEdGuwMJsyU7GxRC8=
 
-body-parser@1.18.3, body-parser@^1.18.3:
+body-parser@1.18.3:
   version "1.18.3"
   resolved "http://registry.npm.taobao.org/body-parser/download/body-parser-1.18.3.tgz#5b292198ffdd553b3a0f20ded0592b956955c8b4"
   integrity sha1-WykhmP/dVTs6DyDe0FkrlWlVyLQ=
@@ -5142,11 +5142,6 @@ node-releases@^1.0.1:
   integrity sha1-pkGtzJaLA5onNF2S7xCwk+XL1B0=
   dependencies:
     semver "^5.3.0"
-
-nodemailer@^4.7.0:
-  version "4.7.0"
-  resolved "http://registry.npm.taobao.org/nodemailer/download/nodemailer-4.7.0.tgz#4420e06abfffd77d0618f184ea49047db84f4ad8"
-  integrity sha1-RCDgar//130GGPGE6kkEfbhPStg=
 
 nopt@^4.0.1:
   version "4.0.1"

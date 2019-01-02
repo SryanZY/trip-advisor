@@ -11,32 +11,66 @@
       </div>
     </div>
     <Contact @sendMess="sendMess"><p class="slogan">Let us know if you wanna book.<em>Email us</em></p></Contact>
+    <mask-wrapper :content="content" :tan="tan" ref="maskWrapper" ></mask-wrapper>
   </div>
 </template>
 
 <script>
 import Contact from 'components/contact/contact'
+import MaskWrapper from 'components/masks/masks'
 import axios from 'axios'
 
 export default {
   name: 'vehicles-booking',
   data () {
     return {
-      imgSrc: require('./vehicle.jpeg')
+      imgSrc: require('./vehicle.jpeg'),
+      content: '',
+      tan: ''
     }
   },
   methods: {
     sendMess (name, email, content) {
       let formData = {
         name: name,
-        email: email,
+        visitor_email: email,
         content: content
       }
-      axios.post('/api/email', formData)
+      /* eslint-disable */
+      let ePattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+      /* eslint-disable */
+      if (!formData.name) {
+        this.tan = '!'
+        this.content = 'Please enter your name'
+      }
+      if (!ePattern.test(formData.visitor_email) || !formData.visitor_email) {
+        this.tan = '!'
+        this.content = 'Please enter the correct format email address'
+      }
+      if (!formData.content) {
+        this.tan = '!'
+        this.content = 'Please enter your content'
+      }
+      axios({
+        method: 'post',
+        url: 'http://47.105.180.76/mail/send',
+        data: formData
+      }).then(res => {
+        console.log(res)
+        if (res.status && formData.name && formData.visitor_email && formData.content) {
+          this.tan = ''
+          this.content = 'Mail sent successfully!'
+        } else if (!res.status && formData.name && formData.visitor_email && formData.content) {
+          this.tan = ''
+          this.content = 'Mail sent failed'
+        }
+      }).catch(error => console.log(error))
+      this.$refs.maskWrapper.isShow = true
     }
   },
   components: {
-    Contact
+    Contact,
+    MaskWrapper
   }
 
 }
