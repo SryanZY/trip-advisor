@@ -5,7 +5,7 @@
         <div class="mask-header">Message</div>
         <div class="mask-title">
           <span :class="{ 'mask-tan': tan }">{{ tan }}</span>
-          <span>{{ content }}</span>
+          <span>{{ text }}</span>
         </div>
         <div class="mask-btn">
           <button @click="cancelShow">Sure</button>
@@ -16,10 +16,11 @@
 </template>
 
 <script>
+import Bus from 'components/eventBus'
 export default {
   name: 'masks',
   props: {
-    content: {
+    text: {
       type: String,
       default: ''
     },
@@ -30,12 +31,16 @@ export default {
   },
   data () {
     return {
-      isShow: false
+      isShow: false,
+      name: '',
+      email: '',
+      content: ''
     }
   },
   methods: {
     cancelShow () {
       this.isShow = false
+      Bus.$emit('clearInput', this.name, this.email, this.content)
     }
   }
 }

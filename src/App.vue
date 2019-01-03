@@ -9,7 +9,7 @@
         <router-link to="/vehicles" class="tab-item">Vehicles</router-link>
       </div>
       <keep-alive>
-        <router-view />
+        <router-view></router-view>
       </keep-alive>
       <hrefs></hrefs>
     </div>

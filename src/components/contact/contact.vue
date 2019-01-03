@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import Bus from 'components/eventBus'
 export default {
   name: 'contact',
   data () {
@@ -38,6 +39,13 @@ export default {
       email: '',
       content: ''
     }
+  },
+  mounted () {
+    Bus.$on('clearInput', (name, email, content) => {
+      this.name = name
+      this.email = email
+      this.content = content
+    })
   },
   methods: {
     sendMess () {

@@ -17,7 +17,7 @@
     <Contact @sendMess="sendMess">
       <p class="slogan">Let us know which place  you wanna visit in China ,we will help you plan a perfect trip. <em>Email us</em></p>
     </Contact>
-    <mask-wrapper :content="content" :tan="tan" ref="maskWrapper"></mask-wrapper>
+    <mask-wrapper :text="text" :tan="tan" ref="maskWrapper"></mask-wrapper>
   </div>
 </template>
 
@@ -89,7 +89,7 @@ export default {
           ]
         }
       ],
-      content: '',
+      text: '',
       tan: ''
     }
   },
@@ -105,30 +105,30 @@ export default {
       /* eslint-disable */
       if (!formData.name) {
         this.tan = '!'
-        this.content = 'Please enter your name'
-      }
-      if (!ePattern.test(formData.visitor_email) || !formData.visitor_email) {
+        this.text = 'Please enter your name'
+      } else if (!ePattern.test(formData.visitor_email) || !formData.visitor_email) {
         this.tan = '!'
-        this.content = 'Please enter the correct format email address'
-      }
-      if (!formData.content) {
+        this.text = 'Please enter the correct format email address'
+      } else if (!formData.content) {
         this.tan = '!'
-        this.content = 'Please enter your content'
+        this.text = 'Please enter your content'
+      } else { // 正则验证通过
+        this.text = ''
+        this.tan = ''
+        axios({
+          method: 'post',
+          url: 'http://47.105.180.76/mail/send',
+          data: formData
+        }).then(res => {
+          if (res.data.status) {
+            this.tan = ''
+            this.text = 'Mail sent successfully!'
+          } else if (!res.data.status) {
+            this.tan = '!'
+            this.text = 'Mail sent failed'
+          }
+        }).catch(error => console.log(error))
       }
-      axios({
-        method: 'post',
-        url: 'http://47.105.180.76/mail/send',
-        data: formData
-      }).then(res => {
-        console.log(res)
-        if (res.status && formData.name && formData.visitor_email && formData.content) {
-          this.tan = ''
-          this.content = 'Mail sent successfully!'
-        } else if (!res.status && formData.name && formData.visitor_email && formData.content) {
-          this.tan = ''
-          this.content = 'Mail sent failed'
-        }
-      }).catch(error => console.log(error))
       this.$refs.maskWrapper.isShow = true
     }
   },
