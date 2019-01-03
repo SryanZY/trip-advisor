@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <Contact @sendMess="sendMess">
+    <Contact @sendMess="sendMess" :regContent="regContent" :nameReg="nameReg" :emailReg="emailReg" :contentReg="contentReg">
       <p class="slogan">Let us know which place  you wanna visit in China ,we will help you plan a perfect trip. <em>Email us</em></p>
     </Contact>
     <mask-wrapper :text="text" :tan="tan" ref="maskWrapper"></mask-wrapper>
@@ -89,8 +89,12 @@ export default {
           ]
         }
       ],
-      text: '',
-      tan: ''
+      text: 'Mail sent successfully!',
+      tan: '',
+      regContent: '',
+      nameReg: false,
+      emailReg: false,
+      contentReg: false
     }
   },
   methods: {
@@ -104,32 +108,36 @@ export default {
       let ePattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
       /* eslint-disable */
       if (!formData.name) {
-        this.tan = '!'
-        this.text = 'Please enter your name'
+        this.regContent = 'Please enter your name'
+        this.nameReg = true
+        this.emailReg = false
+        this.contentReg = false
       } else if (!ePattern.test(formData.visitor_email) || !formData.visitor_email) {
-        this.tan = '!'
-        this.text = 'Please enter the correct format email address'
+        this.regContent = 'Please enter the correct format email address'
+        this.emailReg = true
+        this.nameReg = false
+        this.contentReg = false
       } else if (!formData.content) {
-        this.tan = '!'
-        this.text = 'Please enter your content'
+        this.regContent = 'Please enter your content'
+        this.contentReg = true
+        this.nameReg = false
+        this.emailReg = false
       } else { // 正则验证通过
-        this.text = ''
-        this.tan = ''
         axios({
           method: 'post',
           url: 'http://47.105.180.76/mail/send',
           data: formData
         }).then(res => {
-          if (res.data.status) {
-            this.tan = ''
-            this.text = 'Mail sent successfully!'
-          } else if (!res.data.status) {
+          this.contentReg = false
+          this.nameReg = false
+          this.emailReg = false
+          if (!res.data.status) { // 邮件发送失败
             this.tan = '!'
             this.text = 'Mail sent failed'
           }
         }).catch(error => console.log(error))
+        this.$refs.maskWrapper.isShow = true
       }
-      this.$refs.maskWrapper.isShow = true
     }
   },
   components: {

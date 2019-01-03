@@ -8,18 +8,21 @@
             <span class="text">*</span>Name:
           </label>
           <input type="text" required class="inp" placeholder="Please enter your name" v-model.trim="name">
+          <span class="reg-val" v-show="nameReg">{{ regContent }}</span>
         </div>
         <div class="form-group">
           <label class="form-label">
             <span class="text">*</span>Mailbox:
           </label>
           <input type="email" required class="inp" placeholder="Please enter your email address" v-model.trim="email">
+          <span class="reg-val mail-long" v-show="emailReg">{{ regContent }}</span>
         </div>
         <div class="form-group">
           <label class="form-label">
             <span class="text">*</span>Content:
           </label>
           <input type="text" required class="inp" placeholder="Tell me what you want" v-model.trim="content">
+          <span class="reg-val" v-show="contentReg">{{ regContent }}</span>
         </div>
         <div class="form-btn">
           <button class="btn" @click="sendMess">Send</button>
@@ -33,6 +36,24 @@
 import Bus from 'components/eventBus'
 export default {
   name: 'contact',
+  props: {
+    regContent: {
+      type: String,
+      default: ''
+    },
+    nameReg: {
+      type: Boolean,
+      default: false
+    },
+    emailReg: {
+      type: Boolean,
+      default: false
+    },
+    contentReg: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       name: '',
@@ -57,6 +78,8 @@ export default {
 
 </script>
 <style lang='stylus' scoped>
+  @import '~common/stylus/variable.styl'
+
   .contact
     display flex
     flex-direction column
@@ -75,7 +98,8 @@ export default {
         border-radius 5px
         padding 20px
         .form-group
-          margin-bottom 20px
+          position relative
+          margin-bottom 30px
           display flex
           align-items center
           .form-label
@@ -99,6 +123,13 @@ export default {
             border-radius 5px
             &:focus
               border none
+          .reg-val
+            position absolute
+            bottom -55%
+            left 101px
+            color $color-red
+            font-size 16px
+            font-weight 600
         .btn
           width 138px
           height 39px
@@ -136,6 +167,11 @@ export default {
               width 230px
               padding-left 8px
               font-size 15px
+            .reg-val
+              left 88px
+              font-size 14px
+              &.mail-long
+                width 275px
           .btn
             width 68px
 </style>
